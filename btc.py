@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 import requests
 import time
 
 dolarurl = "https://kur.doviz.com/serbest-piyasa/amerikan-dolari"
 eurourl = "https://kur.doviz.com/serbest-piyasa/euro"
 btcurl = "https://tr.investing.com/currencies/btc-usd"
+ethurl = "https://www.doviz.com/ethereum"
 headers = {"User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0"}
 
 class bcolors:
@@ -29,7 +31,14 @@ while True:
 	euro=r.text[r.text.index('<span class="menu-row1">EURO</span>'):r.text.index('<span class="menu-row1">EURO</span>')+600]
 	eurolast=euro[euro.index("row2")+6:euro.index("row2\">")+12]
 
-    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  + bcolors.ENDC+time.strftime("%H:%M:%S")  
+
+	r= requests.get(ethurl, headers=headers)
+	eth=r.text[r.text.index('<span class="m10-0">Ethereum/T'):r.text.index('<span class="m10-0">Ethereum/T')+600]
+	ethlast=eth[eth.index("row2")+500:eth.index("row2\">")+600]
+
+	print eth
+
+    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  + ethlast +  "    " + bcolors.ENDC+ time.strftime("%H:%M:%S")  
 	time.sleep(5)
 
 
