@@ -1,11 +1,10 @@
 import requests
 import time
 
-url = "https://tr.investing.com/currencies/btc-usd"
+dolarurl = "https://kur.doviz.com/serbest-piyasa/amerikan-dolari"
+eurourl = "https://kur.doviz.com/serbest-piyasa/euro"
+btcurl = "https://tr.investing.com/currencies/btc-usd"
 headers = {"User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0"}
-
-r = requests.get(url, headers=headers)
-foostring=r.text[r.text.index('-last" id="last_last" dir="ltr">'):r.text.index('-last" id="last_last" dir="ltr">')+100]
 
 class bcolors:
     HEADER = '\033[95m'
@@ -17,29 +16,20 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-isFirst=True
-startingValue = 0.0
 while True:
-	r = requests.get(url, headers=headers)
-	foostring=r.text[r.text.index('-last" id="last_last" dir="ltr">'):r.text.index('-last" id="last_last" dir="ltr">')+100]
-	laststring=foostring[foostring.index(">")+1:foostring.index("<")]
-	tmp=foostring[foostring.index(">")+1:foostring.index("<")]+"    "+time.strftime("%H:%M:%S")
-	val= float(foostring[foostring.index(">")+1:foostring.index("<")].replace(".", "").replace(",", "."))
-    	if isFirst:
-		
-		print  tmp
-		startingValue=val
-		time.sleep(10)
-		isFirst=False
-	else: 
-		
-		
-		if val > startingValue:
-			print  bcolors.OKGREEN + laststring+ bcolors.ENDC+ "    " +time.strftime("%H:%M:%S")  
-		elif val< startingValue:
-			print  bcolors.FAIL + laststring+ bcolors.ENDC+ "    " +time.strftime("%H:%M:%S")  
-		else:
-			print  laststring+"    "+time.strftime("%H:%M:%S")
-		time.sleep(10)
+	r = requests.get(btcurl, headers=headers)
+	btc=r.text[r.text.index('-last" id="last_last" dir="ltr">'):r.text.index('-last" id="last_last" dir="ltr">')+100]
+	btclast=btc[btc.index(">")+1:btc.index("<")]
+
+	r= requests.get(dolarurl, headers=headers)
+	dolar=r.text[r.text.index('<span class="menu-row1">DOLAR</span>'):r.text.index('<span class="menu-row1">DOLAR</span>')+600]
+	dolarlast=dolar[dolar.index("row2")+6:dolar.index("row2\">")+12]
+
+	r= requests.get(eurourl, headers=headers)
+	euro=r.text[r.text.index('<span class="menu-row1">EURO</span>'):r.text.index('<span class="menu-row1">EURO</span>')+600]
+	eurolast=euro[euro.index("row2")+6:euro.index("row2\">")+12]
+
+    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  + bcolors.ENDC+time.strftime("%H:%M:%S")  
+	time.sleep(5)
 
 
