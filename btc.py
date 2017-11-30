@@ -34,11 +34,11 @@ while True:
 
 	r= requests.get(ethurl, headers=headers)
 	eth=r.text[r.text.index('<span class="m10-0">Ethereum/T'):r.text.index('<span class="m10-0">Ethereum/T')+600]
-	ethlast=eth[eth.index("row2")+500:eth.index("row2\">")+600]
+	ethlast=eth[eth.index("row2")+290:eth.index("row2\">")+305][eth[eth.index("row2")+290:eth.index("row2\">")+305].index("\"")+2:eth[eth.index("row2")+290:eth.index("row2\">")+305].index("/")-1]
 
-	print eth
 
-    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  + ethlast +  "    " + bcolors.ENDC+ time.strftime("%H:%M:%S")  
-	time.sleep(5)
+
+    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  +  bcolors.FAIL + " ETH : "+ ethlast +  "    " + bcolors.ENDC+ time.strftime("%H:%M:%S")  
+	time.sleep(10)
 
 
