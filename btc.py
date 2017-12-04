@@ -46,7 +46,7 @@ while True:
 	iotalast=iota[iota.index(">")+1:iota.index("<")]
 	
 	
-    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  +  bcolors.FAIL + " IOTA : "+ iotalast +  "    " + bcolors.ENDC+ bcolors.OKGREEN+"Tahmini TL / Bitcoin  :  "+  str(float(dolarlast.replace(',','.'))* float(btclast.replace(',','.')[:-2]))+ "    Tahmini Kazanc "+ str(float(iotacounter)*float(iotalast)*float(dolarlast.replace(',','.'))-float(invest)) + "   " +bcolors.ENDC+time.strftime("%H:%M:%S")  
+    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  +  bcolors.FAIL + " IOTA : "+ iotalast +  "    " + bcolors.ENDC+ bcolors.OKGREEN+"Tahmini TL / Bitcoin  :  "+  str(float(dolarlast.replace(',','.'))* float(btclast.replace(',','.')[:-2]))+bcolors.OKBLUE+ "    Tahmini Kazanc "+ str(float(iotacounter)*float(iotalast)*float(dolarlast.replace(',','.'))-float(invest)) + "   " +bcolors.ENDC+time.strftime("%H:%M:%S")  
 	time.sleep(10)
 
 
