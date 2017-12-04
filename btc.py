@@ -6,6 +6,7 @@ dolarurl = "https://kur.doviz.com/serbest-piyasa/amerikan-dolari"
 eurourl = "https://kur.doviz.com/serbest-piyasa/euro"
 btcurl = "https://tr.investing.com/currencies/btc-usd"
 ethurl = "https://www.doviz.com/ethereum"
+iotaurl = "https://coinmarketcap.com/currencies/iota/"
 headers = {"User-Agent": "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0"}
 
 class bcolors:
@@ -17,6 +18,9 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+invest = raw_input('ne kadar yatirdiniz ')
+iotacounter = raw_input('kac tane aldiniz ')
 
 while True:
 	r = requests.get(btcurl, headers=headers)
@@ -32,11 +36,17 @@ while True:
 	eurolast=euro[euro.index("row2")+6:euro.index("row2\">")+12]
 
 
-	r= requests.get(ethurl, headers=headers)
-	eth=r.text[r.text.index('<span class="m10-0">Ethereum/T'):r.text.index('<span class="m10-0">Ethereum/T')+600]
-	ethlast=eth[eth.index("row2")+290:eth.index("row2\">")+305][eth[eth.index("row2")+290:eth.index("row2\">")+305].index("\"")+2:eth[eth.index("row2")+290:eth.index("row2\">")+305].index("/")-1]
+	#r= requests.get(ethurl, headers=headers)
+	#eth=r.text[r.text.index('<span class="m10-0">Ethereum/T'):r.text.index('<span class="m10-0">Ethereum/T')+600]
+	#ethlast=eth[eth.index("row2")+290:eth.index("row2\">")+305][eth[eth.index("row2")+290:eth.index("row2\">")+305].index("\"")+2:eth[eth.index("row2")+290:eth.index("row2\">")+305].index("/")-1]
 
-    print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  +  bcolors.FAIL + " ETH : "+ ethlast +  "    " + bcolors.ENDC+ bcolors.OKGREEN+"Tahmini TL / Bitcoin  :  "+  str(float(dolarlast.replace(',','.'))* float(btclast.replace(',','.')[:-2]))+ "     "+bcolors.ENDC+time.strftime("%H:%M:%S")  
+	r= requests.get(iotaurl, headers=headers)
+	iota=r.text[r.text.index('data-currency-price data-usd='):r.text.index('data-currency-price data-usd=')+50]
+
+	iotalast=iota[iota.index(">")+1:iota.index("<")]
+	
+	
+    	print  bcolors.OKBLUE + "BTC  : " + btclast+ bcolors.ENDC+ "    " +bcolors.OKGREEN +  " DOLAR :  "+dolarlast +  "    " + bcolors.WARNING + "  EURO:  "  +eurolast+ "    "  +  bcolors.FAIL + " IOTA : "+ iotalast +  "    " + bcolors.ENDC+ bcolors.OKGREEN+"Tahmini TL / Bitcoin  :  "+  str(float(dolarlast.replace(',','.'))* float(btclast.replace(',','.')[:-2]))+ "    Tahmini Kazanc "+ str(float(iotacounter)*float(iotalast)*float(dolarlast.replace(',','.'))-float(invest)) + "   " +bcolors.ENDC+time.strftime("%H:%M:%S")  
 	time.sleep(10)
 
 
